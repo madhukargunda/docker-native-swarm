@@ -69,7 +69,7 @@
 
 ### docker services
 
-![docker-service_replica](https://user-images.githubusercontent.com/5623861/56466944-38d02280-644b-11e9-91a3-f62b21506fe2.jpg)
+![docker-service-updated](https://user-images.githubusercontent.com/5623861/56468851-80af7380-6464-11e9-8a0f-1008ee5f3f62.jpeg)
 
 
 ### docker stack 
