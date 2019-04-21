@@ -1,0 +1,80 @@
+
+version: '3.1'
+services:
+  voting-app:
+    image: dockersamples/examplevotingapp_vote:before
+    container_name: voting-app
+    ports:
+    - 5000:80
+    networks: 
+     - back-end
+     - front-end
+    depends_on: 
+     - redis
+  
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - back-end
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    depends_on: 
+      - worker
+    
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    container_name: worker
+    depends_on: 
+      - db
+    networks: 
+      - back-end
+      - front-end
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      
+  db:
+    image: postgres:9.4
+    container_name: db
+    networks: 
+      - back-end
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  result-app:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - 5001:80
+    container_name: result-app
+    depends_on: 
+      - db
+    networks: 
+      - front-end
+      - back-end
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8080:8080
+    #stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+
+networks: 
+  front-end:
+    driver: overlay
+
+  back-end:
+    driver: overlay
+
+volumes:
+  db-data:
