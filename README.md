@@ -20,30 +20,30 @@
   
 - Docker swarm also provides the distributing the load in to different docker machines
 
-- In docker swarm will have the Manager and Workers 
+- In docker swarm will have the Manager and Workers .
 
 - Manager Nodes responsibilites are
 
-        1.Maintaining the state of the containers
-        2.Distributing the containers into different host machines
-        3.Mainting the state of the cluster
-        3.Managment of the cluster 
-            - Adding the Workers Nodes
-            - Removing the Worker Nodes
+        - 1.Maintaining the state of the containers.
+        - 2.Distributing the containers into different host machines.
+        - 3.Mainting the state of the cluster.
+        - 4.Managment of the cluster. 
+            - Adding the Workers Nodes.
+            - Removing the Worker Nodes.
            
-- In production environment singel node manager is not prefered
+- In production environment singel node manager is not prefered.
 
 - In Production environment Multiple Manager nodes will be grouped in to one cluster and only 
-  one manager node is responsibile making decesions .This node called as Leader
+  one manager node is responsibile making decesions .This node called as Leader.
   
-- Only Leadernode will take the all the decesions and informed to the other Manager Nodes
+- Only Leadernode will take the all the decesions and informed to the other Manager Nodes.
 
 - When any of the situation Leader Node getting failed before updating the information to other Manager Nodes
   cluster will go inconsistent state. 
   
      Ex : 
      When Leader Nodes adding the Worker node or other Manager Node in middle of the update Leader fails other Manager will 
-     not aware of the new changes and in future distributing newly added nodes will not be considered
+     not aware of the new changes and in future distributing newly added nodes will not be considered.
   
 - Docker uses the distributed raft consensus algorithoms to make cluster consistency.
 
@@ -74,18 +74,20 @@
 
 ### docker stack 
 
-- To deploy the containers in production docker introduced the command as docker stack 
-- stack consist of the services
-- we can reuse the docker compose file for stack deployment
-- deploy is the new key word introduced in docker stack we can specify 
-    a.number of replicas we want
-    b.replica where we want to place the in the docker swarm cluster (in which host node)
-    c.restart policy of the container
-    d.rolling updates for service
+- To deploy the containers in production docker introduced the command as docker stack.
+- stack consist of the services.
+- we can reuse the docker compose file for stack deployment.
+- deploy is the new key word introduced in docker stack we can specify. 
+   - a.number of replicas we want.
+   - b.replica where we want to place the in the docker swarm cluster (in which host node).
+   - c.restart policy of the container.
+   - d.rolling updates for service.
+      ![docker-stack-card](https://user-images.githubusercontent.com/5623861/56816599-6adfeb00-6876-11e9-9b3b-8f7d21cf105e.jpg)
+
 - when we use this docker compose on stack file , compose ignores the deploy command instructions
 - docker stack doesnot supports the building the image. when we using the stack means docker thinks
-  images is readily avaibale
-- still we want build the image use the CI and CD plugins to build the images before using the stack
+  images is readily avaibale.
+- still we want build the image use the CI and CD plugins to build the images before using the stack.
 - compose ignores the deploy ,swarm ignores the build from compose yml file.
 - We can use the same compose file for both the local and production deployments.
 
